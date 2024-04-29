@@ -42,6 +42,7 @@ CREATE TABLE `inventory` (
     `ingredient_id` INT,
     `quantity` INT,
     `total_weight` FLOAT,
+    `warning_quantity` INT,
     CONSTRAINT `fk_inventory_ingredient` FOREIGN KEY (`ingredient_id`) REFERENCES `ingredient` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
 );
 -- Recipe
