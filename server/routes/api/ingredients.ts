@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
 		'SELECT * FROM `inventory`.`ingredient` LIMIT 1000;'
 	);
 
-	res.send(rows);
+	res.json(rows);
 });
 
 export default router;
