@@ -18,6 +18,7 @@
 		"cookie": "^0.6.0",
 		"cookie-signature": "^1.0.6",
 		"core-util-is": "^1.0.3",
+		"cors": "^2.8.5",
 		"create-require": "^1.1.1",
 		"debug": "^2.6.9",
 		"define-data-property": "^1.1.4",
@@ -95,6 +96,7 @@
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
+		"@types/cors": "^2.8.17",
 		"@types/express": "^4.17.21",
 		"@types/node": "^20.12.8",
 		"nodemon": "^3.1.0",
