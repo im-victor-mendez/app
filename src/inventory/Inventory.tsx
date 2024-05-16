@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { fetchData } from '../api/data';
 import InventoryIngredient from './Inventory_Ingredient';
-import { jsonToInventoryEntity } from './Inventory_Entity';
+import InventoryEntity, { jsonToInventoryEntity } from './Inventory_Entity';
+import { notifyExistences } from '../api/inventory';
+// Notifications
+import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from 'react-toastify';
 
 /**
  * **Inventory**
@@ -9,22 +13,54 @@ import { jsonToInventoryEntity } from './Inventory_Entity';
  * Inventory page to display all ingredients quantities.
  */
 function Inventory() {
-	const [inventory, setInventory] = useState([]);
+	const [inventory, setInventory] = useState<Array<InventoryEntity>>([]);
 
 	useEffect(() => {
 		async function getData() {
 			const data = (await fetchData(`/inventory`)).data as Array<never>;
-			setInventory(data);
+			const ingredients = data.map(value => jsonToInventoryEntity(value));
+			setInventory(ingredients);
 		}
 
 		getData();
 	}, []);
 
+	useEffect(() => {
+		const notifications = notifyExistences(inventory);
+
+		// Critical
+		notifications.critical.forEach(ingredient => {
+			toast(
+				`Existences for ${ingredient.name} are critical: ${ingredient.quantity}/${ingredient.warning_quantity}`,
+				{
+					autoClose: false,
+					closeButton: false,
+					closeOnClick: false,
+					hideProgressBar: true,
+					type: 'error',
+				}
+			);
+		});
+
+		// Medium
+		notifications.medium.forEach(ingredient => {
+			toast(
+				`Existences for ${ingredient.name} it's close to ending: ${ingredient.quantity}/${ingredient.warning_quantity}`,
+				{
+					autoClose: false,
+					closeButton: false,
+					closeOnClick: false,
+					hideProgressBar: true,
+					type: 'warning',
+				}
+			);
+		});
+	}, [inventory]);
+
 	const inventory_map = inventory.map((ingredient, index) => {
 		const key = `inventory_ingredient_${index}`;
 
-		const { name, quantity, total_weight, warning_quantity } =
-			jsonToInventoryEntity(ingredient);
+		const { name, quantity, total_weight, warning_quantity } = ingredient;
 
 		return (
 			<InventoryIngredient
@@ -42,6 +78,8 @@ function Inventory() {
 			<h1>Inventory</h1>
 
 			{inventory_map}
+
+			<ToastContainer />
 		</>
 	);
 }
