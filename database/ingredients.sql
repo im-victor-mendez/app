@@ -30,7 +30,7 @@ VALUES ("Queso Oaxaca", 18),
     ("Queso americano", 28),
     ("Queso mozzarella", 28),
     ("Queso panela", 30),
-    ("Queso manchego", 40)
+    ("Queso manchego", 40),
     ("Mantequilla", 10);
 -- -- Fish
 -- INSERT INTO `ingredient`(`name`, `unit_weight`);
@@ -42,7 +42,6 @@ VALUES ("Mostaza", 1000),
     ("Salsa BBQ", 1000),
     ("Salsa picante", 1000),
     ("Salsa Chipotle", 1000);
-    
 -- Base
 INSERT INTO `ingredient`(`name`, `unit_weight`)
 VALUES ("Pan para hamburguesa", 100),

@@ -20,4 +20,19 @@ router.get('/', async (req, res) => {
 	res.json(rows);
 });
 
+router.post('/add', async (req, res) => {
+	if (req.body == undefined) {
+		return res.status(500).send('No body');
+	}
+
+	const { date, ingredient_name, quantity } = req.body;
+
+	const script =
+		'INSERT INTO `order` (date, ingredient_name, quantity) VALUES (?, ?, ?)';
+
+	await query(script, [date, ingredient_name, quantity]).then(() => {
+		res.send('Order added successfully');
+	});
+});
+
 export default router;
