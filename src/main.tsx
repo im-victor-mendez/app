@@ -1,10 +1,20 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Inventory from './inventory/Inventory';
+import OrderScreen from './order/OrderScreen';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+	<React.StrictMode>
+		<BrowserRouter>
+			<Routes>
+				<Route
+					key={`Inventory-Route`}
+					path={'/inventory'}
+					element={<Inventory />}
+				/>
+				<Route key={`Order-Route`} path={'/orders'} element={<OrderScreen />} />
+			</Routes>
+		</BrowserRouter>
+	</React.StrictMode>
+);
