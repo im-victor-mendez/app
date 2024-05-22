@@ -1,6 +1,7 @@
 -- Database
 CREATE DATABASE IF NOT EXISTS `inventory` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 USE `inventory`;
+
 -- Drop Tables if exists
 -- Only FKs
 DROP TABLE IF EXISTS `ingredient_recipe`;
@@ -11,14 +12,17 @@ DROP TABLE IF EXISTS `inventory`;
 DROP TABLE IF EXISTS `recipe`;
 -- Principal Tables
 DROP TABLE IF EXISTS `ingredient`;
+
 -- Principal Tables
 -- Ingredients
 CREATE TABLE `ingredient` (
     `name` VARCHAR(255),
     -- Grams
     `unit_weight` FLOAT,
+    `image_path` VARCHAR(255),
     PRIMARY KEY `pk_name`(`name`)
 );
+
 -- Secondary
 -- Providers
 CREATE TABLE `provider` (
@@ -27,6 +31,7 @@ CREATE TABLE `provider` (
     PRIMARY KEY `pk_name`(`name`),
     CONSTRAINT `fk_provider_ingredient` FOREIGN KEY (`ingredient_name`) REFERENCES `ingredient` (`name`) ON DELETE NO ACTION ON UPDATE CASCADE
 );
+
 -- Orders
 CREATE TABLE `order` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -36,6 +41,7 @@ CREATE TABLE `order` (
     PRIMARY KEY `pk_id`(`id`),
     CONSTRAINT `fk_order_ingredient` FOREIGN KEY (`ingredient_name`) REFERENCES `ingredient` (`name`) ON DELETE NO ACTION ON UPDATE CASCADE
 );
+
 -- Inventory
 CREATE TABLE `inventory` (
     `ingredient_name` VARCHAR(255),
@@ -46,29 +52,14 @@ CREATE TABLE `inventory` (
     `warning_quantity` INT,
     CONSTRAINT `fk_inventory_ingredient` FOREIGN KEY (`ingredient_name`) REFERENCES `ingredient` (`name`) ON DELETE NO ACTION ON UPDATE CASCADE
 );
--- Trigger order - inventory
--- Crear el trigger para actualizar la tabla `inventory` al insertar en la tabla `order`
-DELIMITER // -- Creación del trigger para actualizar la cantidad en `inventory` después de insertar en `order`
-CREATE TRIGGER update_inventory_after_order_insert
-AFTER
-INSERT ON `order` FOR EACH ROW BEGIN -- Actualizar la cantidad en `inventory`
-UPDATE `inventory`
-SET `quantity` = `quantity` + NEW.`quantity`,
-    `total_weight` = `total_weight` + (
-        NEW.`quantity` * (
-            SELECT `unit_weight`
-            FROM `ingredient`
-            WHERE `name` = NEW.`ingredient_name`
-        )
-    )
-WHERE `ingredient_name` = NEW.`ingredient_name`;
-END // DELIMITER;
+
 -- Recipe
 CREATE TABLE `recipe` (
     `name` VARCHAR(255),
     `procedure` TEXT,
     PRIMARY KEY `pk_name`(`name`)
 );
+
 -- Relation Ingredient - Recipe
 CREATE TABLE `ingredient_recipe` (
     -- Grams
