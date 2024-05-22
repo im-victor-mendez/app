@@ -1,0 +1,59 @@
+/* Estilos para el contenedor de inventario */
+.inventory-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	padding-right: 320px; /* Espacio reservado para ToastContainer */
+}
+
+.inventory-list {
+	flex: 1;
+	margin-right: 20px; /* Espacio para separación visual */
+}
+
+h1 {
+	font-size: 2em;
+	color: #333;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+/* Estilos para cada ingrediente */
+.ingredient {
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	padding: 15px;
+	margin: 10px 0;
+	background-color: #f9f9f9;
+	transition: background-color 0.3s;
+}
+
+.ingredient:hover {
+	background-color: #f1f1f1;
+}
+
+/* Estilos para el nombre del ingrediente */
+.ingredient .name {
+	font-size: 1.5em;
+	color: #555;
+	margin-bottom: 10px;
+}
+
+/* Estilos para los valores de cantidad */
+.ingredient .quantity_values {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 10px;
+}
+
+.ingredient .quantity,
+.ingredient .warning_quantity {
+	font-size: 1em;
+	color: #777;
+}
+
+/* Estilos para el peso total */
+.ingredient .total_weight {
+	font-size: 1em;
+	color: #777;
+}

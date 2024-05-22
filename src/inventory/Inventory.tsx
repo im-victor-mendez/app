@@ -6,6 +6,7 @@ import { notifyExistences } from '../api/inventory';
 // Notifications
 import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer } from 'react-toastify';
+import './Inventory.css';
 
 /**
  * **Inventory**
@@ -16,6 +17,9 @@ function Inventory() {
 	const [inventory, setInventory] = useState<Array<InventoryEntity>>([]);
 
 	useEffect(() => {
+		// Clear inventory list
+		setInventory([]);
+
 		async function getData() {
 			const data = (await fetchData(`/inventory`)).data as Array<never>;
 			const ingredients = data.map(value => jsonToInventoryEntity(value));
@@ -76,10 +80,19 @@ function Inventory() {
 	return (
 		<>
 			<h1>Inventory</h1>
-
-			{inventory_map}
-
-			<ToastContainer />
+			<div className='inventory-container'>
+				<div className='inventory-list'>{inventory_map}</div>
+				<ToastContainer
+					style={{
+						position: 'fixed',
+						top: 'var(--navbar-height, 50px)',
+						right: 0,
+						width: '320px',
+						maxHeight: '80vh',
+						overflowY: 'auto',
+					}}
+				/>
+			</div>
 		</>
 	);
 }
