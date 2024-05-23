@@ -1,0 +1,34 @@
+.add-order-form {
+	margin: 20px;
+	padding: 20px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	width: 300px;
+}
+
+.add-order-form label {
+	display: block;
+	margin-bottom: 10px;
+}
+
+.add-order-form input {
+	width: 100%;
+	padding: 5px;
+	margin-top: 5px;
+	box-sizing: border-box;
+}
+
+.add-order-form button {
+	width: 100%;
+	padding: 10px;
+	margin-top: 10px;
+	background-color: #007bff;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.add-order-form button:hover {
+	background-color: #0056b3;
+}

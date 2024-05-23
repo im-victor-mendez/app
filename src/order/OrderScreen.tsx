@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import Order from './Order';
 import { fetchData } from '../api/data';
+import { useNavigate } from 'react-router-dom'; // Importa useHistory desde react-router-dom
 import './Orders.css';
 
 function OrderScreen() {
 	const [orderList, setOrderList] = useState<Array<Order>>([]);
+	const navigate = useNavigate(); // Obtén la instancia de history
 
 	useEffect(() => {
 		async function getData() {
@@ -44,10 +46,19 @@ function OrderScreen() {
 		return new Date(b.date).getTime() - new Date(a.date).getTime();
 	}
 
+	// Función para redireccionar a la página de agregar orden
+	const redirectToAddOrder = () => {
+		navigate('/orders/add');
+	};
+
 	return (
 		<>
-			<h1>Orders</h1>
-
+			<div className='header'>
+				<h1>Orders</h1>
+				<button onClick={redirectToAddOrder} className='add-order-button'>
+					Add Order
+				</button>
+			</div>
 			<div className='orders-container'>{ordersMap}</div>
 		</>
 	);
