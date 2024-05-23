@@ -1,16 +1,4 @@
-/* Estilos para el contenedor de inventario */
-.inventory-container {
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-start;
-	padding-right: 320px; /* Espacio reservado para ToastContainer */
-}
-
-.inventory-list {
-	flex: 1;
-	margin-right: 20px; /* Espacio para separación visual */
-}
-
+/* Estilos generales para el inventario */
 h1 {
 	font-size: 2em;
 	color: #333;
@@ -56,4 +44,59 @@ h1 {
 .ingredient .total_weight {
 	font-size: 1em;
 	color: #777;
+}
+
+/* Estilos para el contenedor de inventario */
+.inventory-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	padding-right: 320px; /* Espacio reservado para ToastContainer */
+}
+
+.inventory-list {
+	flex: 1;
+	margin-right: 20px; /* Espacio para separación visual */
+}
+
+/* Estilos para cada grupo de inventario */
+.inventory-group {
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	margin: 10px 0;
+}
+
+.inventory-group summary {
+	background-color: #f1f1f1;
+	padding: 10px;
+	cursor: pointer;
+	font-size: 1.2em;
+	font-weight: bold;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.ingredient-count {
+	font-size: 0.9em;
+	color: #888;
+}
+
+/* Estilos para el ToastContainer */
+#toast-container {
+	position: fixed;
+	top: var(--navbar-height, 50px); /* Ajuste según la altura del navbar */
+	right: 0;
+	width: 320px;
+	max-height: 80vh;
+	overflow-y: auto; /* Para manejar overflow si hay muchas notificaciones */
+}
+
+/* Estilos para estados críticos y de advertencia */
+.ingredient.critical {
+	background-color: #ffa3a3; /* Rojo claro para estado crítico */
+}
+
+.ingredient.warning {
+	background-color: #ffe085; /* Amarillo claro para estado de advertencia */
 }

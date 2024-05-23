@@ -61,27 +61,43 @@ function Inventory() {
 		});
 	}, [inventory]);
 
-	const inventory_map = inventory.map((ingredient, index) => {
-		const key = `inventory_ingredient_${index}`;
-
-		const { name, quantity, total_weight, warning_quantity } = ingredient;
-
-		return (
-			<InventoryIngredient
-				key={key}
-				name={name}
-				quantity={quantity}
-				total_weight={total_weight}
-				warning_quantity={warning_quantity}
-			/>
-		);
-	});
+	// Agrupar ingredientes por letra inicial
+	const groupedInventory = inventory.reduce((acc, ingredient) => {
+		const initial = ingredient.name.charAt(0).toUpperCase();
+		if (!acc[initial]) {
+			acc[initial] = [];
+		}
+		acc[initial].push(ingredient);
+		return acc;
+	}, {} as { [key: string]: InventoryEntity[] });
 
 	return (
 		<>
 			<h1>Inventory</h1>
 			<div className='inventory-container'>
-				<div className='inventory-list'>{inventory_map}</div>
+				<div className='inventory-list'>
+					{Object.keys(groupedInventory)
+						.sort()
+						.map(initial => (
+							<details key={initial} className='inventory-group'>
+								<summary>
+									{initial}
+									<span className='ingredient-count'>
+										({groupedInventory[initial].length})
+									</span>
+								</summary>
+								{groupedInventory[initial].map((ingredient, index) => (
+									<InventoryIngredient
+										key={`${initial}_${index}`}
+										name={ingredient.name}
+										quantity={ingredient.quantity}
+										total_weight={ingredient.total_weight}
+										warning_quantity={ingredient.warning_quantity}
+									/>
+								))}
+							</details>
+						))}
+				</div>
 				<ToastContainer
 					style={{
 						position: 'fixed',

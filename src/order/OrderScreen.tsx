@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Order from './Order';
 import { fetchData } from '../api/data';
+import './Orders.css';
 
 function OrderScreen() {
 	const [orderList, setOrderList] = useState<Array<Order>>([]);
@@ -47,7 +48,7 @@ function OrderScreen() {
 		<>
 			<h1>Orders</h1>
 
-			{ordersMap}
+			<div className='orders-container'>{ordersMap}</div>
 		</>
 	);
 }
