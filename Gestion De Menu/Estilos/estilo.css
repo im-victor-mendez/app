@@ -1,0 +1,347 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+body{
+    font-family: "Ubuntu", sans-serif;
+}
+:root{
+    --padding-container: 100px 0;
+    --color--title: black;
+}
+
+.container{
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: var(--padding-container);
+}
+
+.hero{
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    max-height: 800px;
+    position: relative;
+    display: grid; 
+    grid-template-rows: 100px 1fr;
+    color: white;
+}
+
+.hero::before{
+    content: "";
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(180deg, #0000008c 0%, #0000008c 100%), url('../Imagenes/Fondo_index.png') ;
+    background-size: 50%;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 75% 100%, 25% 100%, 0 70%);
+    z-index: -1;
+}
+
+.nav{
+    --padding-container: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.nav__title{
+    font-weight: 300;
+    font-size: 40px;
+}
+.nav__link{
+    margin-left: auto;
+    padding: 0%;
+    display: flex;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    gap: 2em;
+}
+.nav__itenms{
+    list-style: none;
+}
+
+.nav__links{
+    color: white;
+    text-decoration: none;
+}
+.nav__menu{
+    margin-left: auto;
+    cursor: pointer;
+    display: none;
+}
+
+.nav__close{
+    display: var(--show, none);
+}
+
+.nav__img{
+    display: block;
+    width: 30px;
+}
+
+/* hero conainer*/
+
+.hero__container{
+    max-width: 1200px;
+    --padding-container: 0;
+    display: grid;
+    grid-auto-rows: max-content;
+    align-content: center;
+    gap: 1em;
+    text-align: center;
+}
+.hero__title{
+    margin-top: 10px;
+    font-size: 60px;
+    font-weight: bold;
+    text-align: center;
+}
+.hero__descrip{
+    font-size: 30px;
+    text-align: center;
+}
+.subtatitle{
+    text-align: center;
+}
+.container__about{
+    height: 100%;
+}
+.nav__linkLogo{
+    margin-top: 10px;
+    font-size: 60px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    font-size: 40px;
+} 
+/* De que trata Abaut*/
+.about__Container{
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 0.5fr;
+    grid-auto-rows: max-content;
+    gap: 1em;
+    align-items: center;
+}
+.abaut__Image{
+    min-width: 300px;
+    max-width: 700px;
+    display: block;
+}
+.about__imagen{
+    width: 100%;
+}
+.abaut__text{
+    font-size: 30px;
+}
+.main__about{
+    margin-left: 100px;
+}
+
+/* Desarollo de boton para redireccionamietno*/
+.btn-neon{
+    background: rgb(0, 0, 0) ;
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    padding: 15px 30px;
+    color: white;
+    letter-spacing: 4px;
+    text-decoration: none;
+    font-size: 24px;
+    overflow: hidden;
+    transition: 0.2s;
+}
+.btn-neon:hover{
+    background: #9f65eb;
+    box-shadow: 0 0 10px #9f65eb, 0 0 40px #9f65eb, 0 0 80px #9f65eb;
+    transition-delay: 0.5s;
+ }
+.btn-neon span{
+    position: absolute;
+    display: block;
+}
+#span1{
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, transparent,#9f65eb);
+ }
+ .btn-neon:hover #span1{
+    left: 100%;
+    transition: 0.5s;
+}
+ #span3{
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(270deg, transparent,#9f65eb);
+}
+ .btn-neon:hover #span3{
+    right: 100%;
+    transition: 1s;
+    transition-delay: 0.2s;
+}
+#span2{
+    top: -100%;
+    right: 0;
+    width: 6px;
+    height: 100%;
+    background: linear-gradient(180deg,transparent,#9f65eb);
+}
+.btn-neon:hover #span2{
+    top: 100%;
+    transition: 0.5s;
+    transition-delay: 0.25s;
+}
+#span4{
+    bottom: -100%;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background: linear-gradient(360deg,transparent,#9f65eb);
+}
+.btn-neon:hover #span4{
+    bottom: 100%;
+    transition: 0.5s;
+    transition-delay: 0.25s;
+}
+/* Apartado para subir actulizar el inventario*/
+.UpImages__Section{
+    --padding-container: 0;
+    display: grid;
+    align-content: center;
+    gap: 1em;
+    margin: 5em;
+    text-align: center;
+}
+.SelectImages{
+    cursor: pointer;
+}
+.laberImagen:hover,
+.laberImagen:focus {
+  box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+  -webkit-transform: translateY(-0.25em);
+          transform: translateY(-0.25em);
+}
+.laberImagen{
+    --color: white;
+    --hover: #4533C8;
+}
+.UPButton:hover,
+.UPButton:focus {
+  box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+  -webkit-transform: translateY(-0.25em);
+          transform: translateY(-0.25em);
+}
+.UPButton {
+    --color: white;
+    --hover: #4533C8;
+  }
+  button {
+    color: var(--color);
+    -webkit-transition: 0.25s;
+    transition: 0.25s;
+  }
+  button:hover, button:focus {
+    border-color: var(--hover);
+    background:  #4533C8;
+    color: white;
+  }
+  button {
+    background:  #ffa260;
+    border: 2px solid;
+    font: inherit;
+    line-height: 1;
+    margin: 0.5em;
+    padding: 1em 2em;
+  }
+  code {
+    color: #ffa260;
+    font: inherit;
+  }
+  .Button{
+    margin: 2em;
+  }
+  .span{
+    color: #4533C8;
+    font: inherit;
+  }
+.laber__text{
+    max-width: 500px;
+    display: grid;
+}
+.text__laber{
+    margin: 20px;
+    grid-auto-rows: max-content;
+    align-items: stretch;
+}
+.imagenRedimensionada {
+    width: 200px; /* Ancho deseado */
+    height: 200px; /* Altura deseada */
+    /* Otras propiedades CSS según tus necesidades */
+}
+
+#productoInfo {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid black;
+    z-index: 1000;
+}
+
+/* Estilos para ocultar el contenedor */
+.hidden {
+    display: none;
+}
+/* Fotther o pie de pagina:*/
+.footer{
+    background-color: rgb(22, 14, 32);
+}
+.footer__Title{
+    font-weight: 300;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: white;
+}
+.footer__copyrigt{
+    color: whitesmoke;
+}
+.footer__container{
+    display: grid;
+    grid-template-columns: 1fr ;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.nav--footer{
+    padding-bottom: 20px;
+    display: flex;
+    gap: 1em;
+    border-bottom: 1px solid white;
+    padding-bottom: 60px;
+}
+.footer__social{
+    color: whitesmoke;
+    justify-content: center;
+
+}
+.footer__from{
+    display: grid;
+    justify-content: center;
+    text-align: center;
+}
+.footer__copy{
+    display: grid;
+    justify-content: center;
+    text-align: center;
+}
