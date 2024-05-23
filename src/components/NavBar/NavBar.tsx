@@ -16,6 +16,15 @@ const Navbar: React.FC = () => {
 						Orders
 					</Link>
 				</li>
+				<li className='navbar-item'>
+					<a
+						href='../../../Gestion De Menu/HtmlDelMenu/Index.html'
+						target='_blank'
+						rel='noopener noreferrer'
+					>
+						Menu
+					</a>
+				</li>
 			</ul>
 		</nav>
 	);
