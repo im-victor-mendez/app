@@ -15,6 +15,7 @@ const config: ConnectionOptions = {
 	password: process.env.DB_PASSWORD,
 	database: process.env.DB_DATABASE,
 	connectTimeout: 60000,
+	connectionLimit: 10,
 };
 
 export default config;
