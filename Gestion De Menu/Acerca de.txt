@@ -1,0 +1,10 @@
+El programa se planteo para la administración de recursos dentro de un almacen de comida.
+
+Para este programa se utlizara una base de datos, la cual sera manejada desde la propia pagina web la cual de manera automatica se puedan colocar diferentes parametros que deseemos colocar.  En este caso el porgrama colocara un producto de comida como un tipo de menu el cual contendra:
+	*- Nombre del producto
+	*- Imagen del producto	
+	*- Definicion del Producto		
+	*- Ingredientes del producto
+__A este conjunto de objetos le concederemos el nombre de Contenedores de Alimento.__
+
+Haci que se plantea el uso de varios archivos, asi como tambien el uso de Html, php, y javascript. 	La pagina web podra Administrar los contenedores de alimento, ya sea agregando nuevos, modificandolos o eliminandolos.

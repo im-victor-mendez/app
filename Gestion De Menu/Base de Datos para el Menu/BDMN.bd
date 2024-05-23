@@ -1,0 +1,12 @@
+-- Creacion de la base de datos Menu
+Create Database Menu;
+
+CREATE TABLE platillos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_platillo VARCHAR(255) NOT NULL,
+    descripcion_platillo TEXT,
+    ingredientes TEXT,
+    imagen_path VARCHAR(255) NOT NULL
+);
+
+ $sql = "INSERT INTO platillos (nombre, descripcion, imagen, ingredientes) VALUES ('$nombreArchivo', '$descripcion', '$ruta')";

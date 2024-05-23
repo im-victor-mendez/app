@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir imágenes</title>
+    <!– Implemetacion de una imagen como icono –>
+    <link rel="Icon" href="../Imagenes/infoico.png">
+    <!– Implemetacion de un formato de estilo, y una normalizacion –>
+    <link rel="stylesheet" href="../Estilos/estilo.css">
+    <link rel="stylesheet" href="../Estilos/normaliza.css">
+    <style>
+        #imagenesContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+    gap: 20px; /* Espacio entre las imágenes */
+    justify-items: center; /* Centrar imágenes horizontalmente */
+}
+    </style>
+    </head>
+<body>
+    <!– Encabezado de la pagina, o tambien llamado header –>
+    <header class="hero">
+        <nav class="nav container">
+            <div class="nav__Logo">
+                <a class="nav__linkLogo" href="index.html">Almacen</a>
+            </div>
+            <ul class="nav__link nav__link--menu">
+                <li class="nav__itenms">
+                    <a  class="nav__links" target="_blank" href="1.html">Acerca de</a>
+                </li>
+                <img src="Imagenes/x.svg"  class="nav__close">
+            </ul>
+            <div class="nav__menu">
+                <img src="Imagenes/menu.svg">
+            </div>
+        </nav>
+    
+        <section class="hero__container container">
+            <h1 class="hero__title">Almacen</h1>
+            <p class="hero__descrip">Checa todo lo que tenemos para ofrer, aqui podras encontrar los ingredientes que contie cada producto.</p>
+        </section>  
+    </header>
+    <main>
+        <!– Parte de la pagina para subir la documentacion de la comida –>
+        <section class="Comida__container container">
+            <!– Galeria de imagnes  –>
+            <br>
+            <h2>Preciona la imagen del producto para concocer los ingredientes que contiene</h2>
+            <br><br><br><br>
+            <div id="imagenesContainer">
+                
+            </div>
+
+            <!-- Contenedor oculto para mostrar la información del producto -->
+            <div id="productoInfo" class="hidden">
+                <h2 id="nombreProducto"></h2>
+                <h3>Descripcion del producto:</h3>
+                <p id="descripcionProducto"></p>
+                <h3>Ingredientes:</h3>
+                <p id="ingredientesProducto"></p> 
+            </div>
+            <br>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="Imagenes.js"></script> <!-- Archivo JavaScript para cargar y mostrar imágenes -->
+            <script>
+                // Evento de clic para mostrar información del producto
+                $(document).on('click', '.imagenRedimensionada', function() {
+                    var nombre = $(this).data('nombre');
+                    var descripcion = $(this).data('descripcion');
+                    var ingredientes = $(this).data('ingredientes');
+            
+                    $('#nombreProducto').text(nombre);
+                    $('#descripcionProducto').text(descripcion);
+                    $('#ingredientesProducto').text(ingredientes);
+                    $('#productoInfo').removeClass('hidden');
+                });
+                
+            </script>
+        </section>
+    </main>
+
+    <!– Parte de la pagina para subir la documentacion de la comida correspondiente –>
+    <section class="UpImages__Section">
+        <div class="UpImages">
+          <h2>Actualizar Menu - Inventario</h2>
+          <form id="uploadForm" action="ProcesoSubida.php" method="post" enctype="multipart/form-data">
+            <input type="file" id="imagenInput" name="imagen" style="display: none;">
+            <div class="Button">
+                <button class="laberImagen" type="button" onclick="document.getElementById('imagenInput').click()">Seleccionar imagen</button>
+            </div>
+            <br>
+            <span class="span" id="nombreArchivo"></span>
+            <br>
+            <div class="laber__text container">
+                <div class="text__laber ">
+                    <label for="nombre_platillo">Nombre del platillo:</label>
+                    <input type="text" id="nombre_platillo" name="nombrePlatillo">
+                </div>
+                <div class="text__laber container">
+                    <label for="descripcion_platillo">Descripcion  del platillo:</label>
+                    <input type="text" id="descripcion_platillo" name="descripcion">
+                </div>
+                <div class="text__laber">
+                    <label for="ingredientesInput">Ingredientes del producto:</label>
+                     <input type="text" id="ingredientesInput" name="ingredientes">
+                </div>
+            
+            
+            <br>
+            <div class="Button">
+              <button class="UPButton" type="submit">Subir Informacion</button>
+            </div>
+          </form>
+          <div id="imagenesContainer"></div>
+        </div>
+      </section>
+
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="scirpt.js"></script>
+
+
+      
+   
+    <footer class="footer">
+        <section class="footer__container container">
+            <nav class="nav--footer">
+                <h2 class="footer__Title">Almacen</h2>
+
+                <ul class="nav__link nav__link--footer">
+                    <li class="nav__itenms">
+                        <a  class="nav__links" target="_blank" href="1.html">Automatización</a>
+                </ul>
+            </nav>
+            <form class="footer__from">
+                <div class="footer__social">
+                    <br><br>
+                    <h2>Canal de youtube</h2>
+                    <br><br>
+                    <a href="https://www.youtube.com/channel/UCTJJrjCNzDrrY0x4wGbAvRQ" class="footer__icons"><img src="./Imagenes/youtube.svg" class="footer__img"></a>
+                </div>
+            </form>
+            <section class="footer__copy container">
+                <h3 class="footer__copyrigt">Derechos reservados: $copy Flores Beltran Juan Diego (Dishadow)</h3>
+            </section>
+        </section>
+    </footer>
+</body>
+</html>
