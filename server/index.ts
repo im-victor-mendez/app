@@ -3,6 +3,7 @@ import express, { Express } from 'express';
 import routes from './routes/index';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import fileUpload from 'express-fileupload';
 
 // Environment config
 dotenv.config();
@@ -16,6 +17,9 @@ app.use(cors());
 
 // Middleware to analyze requests in JSON format
 app.use(bodyParser.json());
+app.use(fileUpload());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Routes
 routes(app);
