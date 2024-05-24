@@ -6,6 +6,7 @@ import OrderScreen from './order/OrderScreen';
 import App from './App';
 import Navbar from './components/NavBar/NavBar';
 import AddOrderForm from './order/AddOrder';
+import Menu from './Menu/Menu';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>
@@ -24,6 +25,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 					path={'/orders/add'}
 					element={<AddOrderForm />}
 				/>
+				<Route key={`Menu-Route`} path={'/menu'} element={<Menu />} />
 			</Routes>
 		</BrowserRouter>
 	</React.StrictMode>
