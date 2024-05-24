@@ -16,6 +16,7 @@ const config: ConnectionOptions = {
 	database: process.env.DB_DATABASE,
 	connectTimeout: 60000,
 	connectionLimit: 10,
+	enableKeepAlive: false,
 };
 
 export default config;

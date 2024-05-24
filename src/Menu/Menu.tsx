@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './Menu.css';
 import { fetchData } from '../api/data';
+import { server_url } from '../api/constants';
 
 interface Platillo {
 	imagen_path: string;
@@ -14,114 +16,138 @@ const Menu: React.FC = () => {
 	const [selectedPlatillo, setSelectedPlatillo] = useState<Platillo | null>(
 		null
 	);
+	const [formData, setFormData] = useState({
+		nombrePlatillo: '',
+		descripcion: '',
+		ingredientes: '',
+	});
 
 	useEffect(() => {
-		fetchData('/images')
-			.then(response => {
-				setPlatillos(response.data);
-			})
-			.catch(error => console.error('Error:', error));
+		fetchPlatillos();
 	}, []);
+
+	const fetchPlatillos = async () => {
+		try {
+			const response = await fetchData(`${server_url}/menu`);
+			setPlatillos(response.data);
+		} catch (error) {
+			console.error('Error:', error);
+		}
+	};
 
 	const handleImageClick = (platillo: Platillo) => {
 		setSelectedPlatillo(platillo);
 	};
 
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value, files } = e.target;
+		if (name === 'imagen' && files) {
+			const file = files[0];
+			setFormData({
+				...formData,
+				imagen: file,
+			});
+			const reader = new FileReader();
+			reader.onloadend = () => {
+				setImagePreview(reader.result as string);
+			};
+			reader.readAsDataURL(file);
+		} else {
+			setFormData({
+				...formData,
+				[name]: value,
+			});
+		}
+	};
+
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+		const { nombrePlatillo, descripcion, ingredientes, imagen } = formData;
+		const data = new FormData();
+		data.append('nombre_platillo', nombrePlatillo);
+		data.append('descripcion_platillo', descripcion);
+		data.append('ingredientes', ingredientes);
+		if (imagen) {
+			data.append('image', imagen);
+		}
+
+		try {
+			await axios.post(`${server_url}/menu/upload`, data, {
+				headers: {
+					'Content-Type': 'multipart/form-data',
+				},
+			});
+			alert('Información subida exitosamente');
+			fetchPlatillos();
+		} catch (error) {
+			console.error('Error al subir la información:', error);
+			alert('Error al subir la información');
+		}
+	};
+
 	return (
 		<div>
-			<header className='hero'>
-				<nav className='nav container'>
-					<div className='nav__Logo'>
-						<a className='nav__linkLogo' href='index.html'>
-							Almacen
-						</a>
-					</div>
-					<ul className='nav__link nav__link--menu'>
-						<li className='nav__itenms'>
-							<a className='nav__links' target='_blank' href='1.html'>
-								Acerca de
-							</a>
-						</li>
-						<img
-							src='../Imagenes/x.svg'
-							className='nav__close'
-							alt='Close Menu'
-						/>
-					</ul>
-					<div className='nav__menu'>
-						<img src='../Imagenes/menu.svg' alt='Menu' />
-					</div>
-				</nav>
+			<div>
+				<header className='hero'>
+					<h1 className='hero__title'>Menu</h1>
+				</header>
 
-				<section className='hero__container container'>
-					<h1 className='hero__title'>Almacen</h1>
-					<p className='hero__descrip'>
-						Checa todo lo que tenemos para ofrecer, aquí podrás encontrar los
-						ingredientes que contiene cada producto.
-					</p>
-				</section>
-			</header>
-
-			<main>
-				<section className='Comida__container container'>
-					<br />
-					<h2>
-						Presiona la imagen del producto para conocer los ingredientes que
-						contiene
-					</h2>
-					<br />
-					<br />
-					<br />
-					<br />
-					<div
-						id='imagenesContainer'
-						style={{
-							display: 'grid',
-							gridTemplateColumns: 'repeat(3, 1fr)',
-							gap: '20px',
-							justifyItems: 'center',
-						}}
-					>
-						{platillos.map((platillo, index) => (
-							<img
-								key={index}
-								src={platillo.imagen_path}
-								alt={platillo.nombre_platillo}
-								className='imagenRedimensionada'
-								onClick={() => handleImageClick(platillo)}
-							/>
-						))}
-					</div>
-
-					{selectedPlatillo && (
-						<div id='productoInfo'>
-							<h2 id='nombreProducto'>{selectedPlatillo.nombre_platillo}</h2>
-							<h3>Descripción del producto:</h3>
-							<p id='descripcionProducto'>
-								{selectedPlatillo.descripcion_platillo}
-							</p>
-							<h3>Ingredientes:</h3>
-							<p id='ingredientesProducto'>{selectedPlatillo.ingredientes}</p>
+				<main>
+					<section className='Comida__container container'>
+						<h2>
+							Presiona la imagen del producto para conocer los ingredientes que
+							contiene
+						</h2>
+						<div
+							id='imagenesContainer'
+							style={{
+								display: 'grid',
+								gridTemplateColumns: 'repeat(3, 1fr)',
+								gap: '20px',
+								justifyItems: 'center',
+							}}
+						>
+							{platillos.map((platillo, index) => (
+								<img
+									key={index}
+									src={platillo.imagen_path}
+									alt={platillo.nombre_platillo}
+									className='imagenRedimensionada'
+									onClick={() => handleImageClick(platillo)}
+								/>
+							))}
 						</div>
-					)}
-					<br />
-				</section>
-			</main>
 
-			<section className='UpImages__Section'>
-				<div className='UpImages'>
-					<h2>Actualizar Menú - Inventario</h2>
-					<form
-						id='uploadForm'
-						action='/upload'
-						method='post'
-						encType='multipart/form-data'
-					>
+						{selectedPlatillo && (
+							<div id='productoInfo'>
+								<h2 id='nombreProducto'>{selectedPlatillo.nombre_platillo}</h2>
+								<h3>Descripción del producto:</h3>
+								<p id='descripcionProducto'>
+									{selectedPlatillo.descripcion_platillo}
+								</p>
+								<h3>Ingredientes:</h3>
+								<p id='ingredientesProducto'>{selectedPlatillo.ingredientes}</p>
+							</div>
+						)}
+						<br />
+					</section>
+				</main>
+
+				<section className='UpImages__Section'>
+					<div className='UpImages'>
+						<h2>Actualizar Menú - Inventario</h2>
+						{imagePreview && (
+							<img
+								src={imagePreview}
+								alt='Vista previa de la imagen'
+								className='imagePreview'
+							/>
+						)}
 						<input
 							type='file'
 							id='imagenInput'
 							name='imagen'
-							style={{ display: 'none' }}
+							onChange={handleInputChange}
 						/>
 						<div className='Button'>
 							<button
@@ -138,7 +164,12 @@ const Menu: React.FC = () => {
 						<div className='laber__text container'>
 							<div className='text__laber'>
 								<label htmlFor='nombre_platillo'>Nombre del platillo:</label>
-								<input type='text' id='nombre_platillo' name='nombrePlatillo' />
+								<input
+									type='text'
+									id='nombre_platillo'
+									name='nombrePlatillo'
+									onChange={handleInputChange}
+								/>
 							</div>
 							<div className='text__laber container'>
 								<label htmlFor='descripcion_platillo'>
@@ -148,63 +179,59 @@ const Menu: React.FC = () => {
 									type='text'
 									id='descripcion_platillo'
 									name='descripcion'
+									onChange={handleInputChange}
 								/>
 							</div>
 							<div className='text__laber'>
 								<label htmlFor='ingredientesInput'>
 									Ingredientes del producto:
 								</label>
-								<input type='text' id='ingredientesInput' name='ingredientes' />
+								<input
+									type='text'
+									id='ingredientesInput'
+									name='ingredientes'
+									onChange={handleInputChange}
+								/>
 							</div>
 						</div>
 						<br />
 						<div className='Button'>
-							<button className='UPButton' type='submit'>
+							<button className='UPButton' onClick={handleSubmit}>
 								Subir Información
 							</button>
 						</div>
-					</form>
-				</div>
-			</section>
-
-			<footer className='footer'>
-				<section className='footer__container container'>
-					<nav className='nav--footer'>
-						<h2 className='footer__Title'>Almacen</h2>
-						<ul className='nav__link nav__link--footer'>
-							<li className='nav__itenms'>
-								<a className='nav__links' target='_blank' href='1.html'>
-									Automatización
-								</a>
-							</li>
-						</ul>
-					</nav>
-					<form className='footer__from'>
-						<div className='footer__social'>
-							<br />
-							<br />
-							<h2>Canal de YouTube</h2>
-							<br />
-							<br />
-							<a
-								href='https://www.youtube.com/channel/UCTJJrjCNzDrrY0x4wGbAvRQ'
-								className='footer__icons'
-							>
-								<img
-									src='./../Imagenes/youtube.svg'
-									className='footer__img'
-									alt='YouTube'
-								/>
-							</a>
-						</div>
-					</form>
-					<section className='footer__copy container'>
-						<h3 className='footer__copyrigt'>
-							Derechos reservados: © Flores Beltrán Juan Diego (Dishadow)
-						</h3>
-					</section>
+					</div>
 				</section>
-			</footer>
+
+				<footer className='footer'>
+					<section className='footer__container container'>
+						<form className='footer__from'>
+							<div className='footer__social'>
+								<br />
+								<br />
+								<h2>Canal de YouTube</h2>
+								<br />
+								<br />
+								<a
+									href='https://www.youtube.com/channel/UCTJJrjCNzDrrY0x4wGbAvRQ'
+									className='footer__icons'
+								>
+									<img
+										src='./../Imagenes/youtube.svg'
+										className='footer__img'
+										alt='YouTube'
+									/>
+								</a>
+							</div>
+						</form>
+						<section className='footer__copy container'>
+							<h3 className='footer__copyrigt'>
+								Derechos reservados: © Flores Beltrán Juan Diego (Dishadow)
+							</h3>
+						</section>
+					</section>
+				</footer>
+			</div>
 		</div>
 	);
 };

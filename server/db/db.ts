@@ -20,5 +20,7 @@ export async function query(
 	const connection = await mysql.createConnection(config);
 	const [results] = await connection.execute(sql, params);
 
+	connection.destroy();
+
 	return results;
 }
